@@ -53,7 +53,12 @@ def checkhomoglyphs():
         while ocr_text.endswith("."):
             ocr_text = ocr_text[:-1] # trim trailing periods
         # prepare single result
-        result = {'new_name':name, 'ocr_of_new_name':ocr_text, 'ocr_similarity_to_new_name':similar(name, ocr_text), 'name_is_as_it_seems':(name==ocr_text), 'num_non_ascii_characters':len(non_ascii_chars_in_name), 'non_ascii_characters':str(non_ascii_chars_in_name)}
+        result = {'new_name':name, 
+                  'ocr_of_new_name':ocr_text, 
+                  'ocr_similarity_to_new_name':similar(name, ocr_text), 
+                  'name_is_as_it_seems':(name==ocr_text), 
+                  'num_non_ascii_characters':len(non_ascii_chars_in_name), 
+                  'non_ascii_characters':str(non_ascii_chars_in_name)}
         if other_names:
             other_names = other_names.split("||")
             for other_name in other_names:
