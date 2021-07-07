@@ -1,0 +1,181 @@
+let EventData=SecurityEvent
+| where EventID in (4720, 4741, 4742, 4722, 4724, 4728, 4732, 4799)
+| project TimeGenerated, Computer, EventID, Activity, CallerProcessName, EventData
+| extend EventDetail = parse_xml(EventData)["EventData"]["Data"]
+;
+let SecEvt4720_UserAccountCreated=() {
+let secEvents = EventData
+| where EventID == 4720
+| extend TargetUserName = tostring(EventDetail.[0].["#text"])
+| extend TargetDomainName = tostring(EventDetail.[1].["#text"])
+| extend TargetSid = tostring(EventDetail.[2].["#text"]) 
+| extend SubjectUserSid = tostring(EventDetail.[3].["#text"])
+| extend SubjectUserName = tostring(EventDetail.[4].["#text"])
+| extend SubjectDomainName = tostring(EventDetail.[5].["#text"])
+| extend SubjectLogonId = tostring(EventDetail.[6].["#text"])
+| extend PrivilegeList = tostring(EventDetail.[7].["#text"])
+| extend SamAccountName = tostring(EventDetail.[8].["#text"])
+| extend DisplayName = tostring(EventDetail.[9].["#text"])
+| extend UserPrincipalName = tostring(EventDetail.[10].["#text"])
+| extend HomeDirectory = tostring(EventDetail.[11].["#text"])
+| extend HomePath = tostring(EventDetail.[12].["#text"])
+| extend ScriptPath = tostring(EventDetail.[13].["#text"])
+| extend ProfilePath = tostring(EventDetail.[14].["#text"])
+| extend UserWorkstations = tostring(EventDetail.[15].["#text"])
+| extend PasswordLastSet = tostring(EventDetail.[16].["#text"])
+| extend AccountExpires = tostring(EventDetail.[17].["#text"])
+| extend PrimaryGroupId = tostring(EventDetail.[18].["#text"])
+| extend AllowedToDelegateTo = tostring(EventDetail.[19].["#text"])
+| extend OldUacValue = tostring(EventDetail.[20].["#text"])
+| extend NewUacValue = tostring(EventDetail.[21].["#text"])
+| extend UserAccountControl = tostring(EventDetail.[22].["#text"])
+| extend UserParameters = tostring(EventDetail.[23].["#text"])
+| extend SidHistory = tostring(EventDetail.[24].["#text"])
+| extend LogonHours = tostring(EventDetail.[25].["#text"])
+| project-away EventDetail;
+secEvents
+};
+let SecEvt4722_UserAccountEnabled=() {
+let secEvents = EventData
+| where EventID == 4722
+| extend TargetUserName = tostring(EventDetail.[0].["#text"])
+| extend TargetDomainName = tostring(EventDetail.[1].["#text"])
+| extend TargetSid = tostring(EventDetail.[2].["#text"]) 
+| extend SubjectUserSid = tostring(EventDetail.[3].["#text"])
+| extend SubjectUserName = tostring(EventDetail.[4].["#text"])
+| extend SubjectDomainName = tostring(EventDetail.[5].["#text"])
+| extend SubjectLogonId = tostring(EventDetail.[6].["#text"])
+| project-away EventDetail;
+secEvents
+};
+let SecEvt4724_PasswordChanged=() {
+let secEvents = EventData
+| where EventID == 4724
+| extend TargetUserName = tostring(EventDetail.[0].["#text"])
+| extend TargetDomainName = tostring(EventDetail.[1].["#text"])
+| extend TargetSid = tostring(EventDetail.[2].["#text"]) 
+| extend SubjectUserSid = tostring(EventDetail.[3].["#text"])
+| extend SubjectUserName = tostring(EventDetail.[4].["#text"])
+| extend SubjectDomainName = tostring(EventDetail.[5].["#text"])
+| extend SubjectLogonId = tostring(EventDetail.[6].["#text"])
+| project-away EventDetail;
+secEvents
+};
+let SecEvt4799_SecGroupEnumerated=() {
+let secEvents = EventData
+| where EventID == 4799
+| extend TargetUserName = tostring(EventDetail.[0].["#text"])
+| extend TargetDomainName = tostring(EventDetail.[1].["#text"])
+| extend TargetSid = tostring(EventDetail.[2].["#text"]) 
+| extend SubjectUserSid = tostring(EventDetail.[3].["#text"])
+| extend SubjectUserName = tostring(EventDetail.[4].["#text"])
+| extend SubjectDomainName = tostring(EventDetail.[5].["#text"])
+| extend SubjectLogonId = tostring(EventDetail.[6].["#text"])
+| extend CallerProcessId = tostring(EventDetail.[7].["#text"])
+| extend CallerProcessName = tostring(EventDetail.[8].["#text"])
+| project-away EventDetail;
+secEvents
+};
+let SecEvt4732_SecMemberAddedLocalGroup=() {
+let secEvents = EventData
+| where EventID == 4732
+| extend MemberName = tostring(EventDetail.[0].["#text"])
+| extend MemberSid = tostring(EventDetail.[1].["#text"])
+| extend TargetUserName = tostring(EventDetail.[2].["#text"]) 
+| extend TargetDomainName = tostring(EventDetail.[3].["#text"])
+| extend TargetSid = tostring(EventDetail.[4].["#text"])
+| extend SubjectUserSid = tostring(EventDetail.[5].["#text"])
+| extend SubjectUserName = tostring(EventDetail.[6].["#text"])
+| extend SubjectDomainName = tostring(EventDetail.[7].["#text"])
+| extend SubjectLogonId = tostring(EventDetail.[8].["#text"])
+| extend PrivilegeList = tostring(EventDetail.[9].["#text"])
+| project-away EventDetail;
+secEvents
+};
+let SecEvt4728_SecMemberAddedGlobalGroup=() {
+let secEvents = EventData
+| where EventID == 4728
+| extend MemberName = tostring(EventDetail.[0].["#text"])
+| extend MemberSid = tostring(EventDetail.[1].["#text"])
+| extend TargetUserName = tostring(EventDetail.[2].["#text"]) 
+| extend TargetDomainName = tostring(EventDetail.[3].["#text"])
+| extend TargetSid = tostring(EventDetail.[4].["#text"])
+| extend SubjectUserSid = tostring(EventDetail.[5].["#text"])
+| extend SubjectUserName = tostring(EventDetail.[6].["#text"])
+| extend SubjectDomainName = tostring(EventDetail.[7].["#text"])
+| extend SubjectLogonId = tostring(EventDetail.[8].["#text"])
+| extend PrivilegeList = tostring(EventDetail.[9].["#text"])
+| project-away EventDetail;
+secEvents
+};
+let SecEvt4741_ComputerAccountAdded=() {
+let secEvents = EventData
+| where EventID == 4741
+| extend TargetUserName = tostring(EventDetail.[0].["#text"])
+| extend TargetDomainName = tostring(EventDetail.[1].["#text"])
+| extend TargetSid = tostring(EventDetail.[2].["#text"]) 
+| extend SubjectUserSid = tostring(EventDetail.[3].["#text"])
+| extend SubjectUserName = tostring(EventDetail.[4].["#text"])
+| extend SubjectDomainName = tostring(EventDetail.[5].["#text"])
+| extend SubjectLogonId = tostring(EventDetail.[6].["#text"])
+| extend PrivilegeList = tostring(EventDetail.[7].["#text"])
+| extend SamAccountName = tostring(EventDetail.[8].["#text"])
+| extend DisplayName = tostring(EventDetail.[9].["#text"])
+| extend UserPrincipalName = tostring(EventDetail.[10].["#text"])
+| extend HomeDirectory = tostring(EventDetail.[11].["#text"])
+| extend HomePath = tostring(EventDetail.[12].["#text"])
+| extend ScriptPath = tostring(EventDetail.[13].["#text"])
+| extend ProfilePath = tostring(EventDetail.[14].["#text"])
+| extend UserWorkstations = tostring(EventDetail.[15].["#text"])
+| extend PasswordLastSet = tostring(EventDetail.[16].["#text"])
+| extend AccountExpires = tostring(EventDetail.[17].["#text"])
+| extend PrimaryGroupId = tostring(EventDetail.[18].["#text"])
+| extend AllowedToDelegateTo = tostring(EventDetail.[19].["#text"])
+| extend OldUacValue = tostring(EventDetail.[20].["#text"])
+| extend NewUacValue = tostring(EventDetail.[21].["#text"])
+| extend UserAccountControl = tostring(EventDetail.[22].["#text"])
+| extend UserParameters = tostring(EventDetail.[23].["#text"])
+| extend SidHistory = tostring(EventDetail.[24].["#text"])
+| extend LogonHours = tostring(EventDetail.[25].["#text"])
+| extend DnsHostName = tostring(EventDetail.[26].["#text"])
+| extend ServicePrincipalNames = tostring(EventDetail.[27].["#text"])
+| project-away EventDetail;
+secEvents
+};
+let SecEvt4742_ComputerAccountChanged=() {
+let secEvents = EventData
+| where EventID == 4742
+| extend ComputerAccountChange = tostring(EventDetail.[0].["#text"])
+| extend TargetUserName = tostring(EventDetail.[1].["#text"])
+| extend TargetDomainName = tostring(EventDetail.[2].["#text"]) 
+| extend TargetSid = tostring(EventDetail.[3].["#text"])
+| extend SubjectUserSid = tostring(EventDetail.[4].["#text"])
+| extend SubjectUserName = tostring(EventDetail.[5].["#text"])
+| extend SubjectDomainName = tostring(EventDetail.[6].["#text"])
+| extend SubjectLogonId = tostring(EventDetail.[7].["#text"])
+| extend PrivilegeList = tostring(EventDetail.[8].["#text"])
+| extend SamAccountName = tostring(EventDetail.[9].["#text"])
+| extend DisplayName = tostring(EventDetail.[10].["#text"])
+| extend UserPrincipalName = tostring(EventDetail.[11].["#text"])
+| extend HomeDirectory = tostring(EventDetail.[12].["#text"])
+| extend HomePath = tostring(EventDetail.[13].["#text"])
+| extend ScriptPath = tostring(EventDetail.[14].["#text"])
+| extend ProfilePath = tostring(EventDetail.[15].["#text"])
+| extend UserWorkstations = tostring(EventDetail.[16].["#text"])
+| extend PasswordLastSet = tostring(EventDetail.[17].["#text"])
+| extend AccountExpires = tostring(EventDetail.[18].["#text"])
+| extend PrimaryGroupId = tostring(EventDetail.[19].["#text"])
+| extend AllowedToDelegateTo = tostring(EventDetail.[20].["#text"])
+| extend OldUacValue = tostring(EventDetail.[21].["#text"])
+| extend NewUacValue = tostring(EventDetail.[22].["#text"])
+| extend UserAccountControl = tostring(EventDetail.[23].["#text"])
+| extend UserParameters = tostring(EventDetail.[24].["#text"])
+| extend SidHistory = tostring(EventDetail.[25].["#text"])
+| extend LogonHours = tostring(EventDetail.[26].["#text"])
+| extend DnsHostName = tostring(EventDetail.[27].["#text"])
+| extend ServicePrincipalNames = tostring(EventDetail.[28].["#text"])
+| project-away EventDetail;
+secEvents
+};
+(union isfuzzy=true
+SecEvt4799_SecGroupEnumerated,SecEvt4720_UserAccountCreated, SecEvt4722_UserAccountEnabled, SecEvt4724_PasswordChanged, SecEvt4799_SecGroupEnumerated, SecEvt4732_SecMemberAddedLocalGroup, SecEvt4728_SecMemberAddedGlobalGroup, SecEvt4741_ComputerAccountAdded, SecEvt4742_ComputerAccountChanged)
